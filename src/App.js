@@ -1,25 +1,20 @@
-import logo from './logo.svg';
+import { createContext, useState } from 'react';
 import './App.css';
+import CompA from './components/CompA';
 
+const myContext = createContext()
 function App() {
+  const [data,setData] = useState("This is done through useContext")
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <myContext.Provider value={data}>
+        <h1 className='header'>useContext- Avoiding Prop Drilling</h1>
+        <CompA myData={data} />
+      </myContext.Provider>
+    
     </div>
   );
 }
 
 export default App;
+export {myContext};
