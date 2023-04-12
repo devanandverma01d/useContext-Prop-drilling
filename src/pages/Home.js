@@ -35,6 +35,8 @@ const reducerFn=(oldState=intialState,action)=>{
                     })
                 ]
             }   
+        default:
+            return newState   
     }
 }
 
