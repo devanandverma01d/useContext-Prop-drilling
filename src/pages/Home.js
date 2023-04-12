@@ -1,11 +1,51 @@
 //1 Import area
 import React from 'react'
+import { useReducer } from 'react';
 //2. Function definition area
+
+const intialState = {
+    movie:[
+      {
+        name:"Alone3",
+        image:"https://pixner.net/boleto/demo/assets/images/movie/movie01.jpg",
+      },
+      {
+        name:"Mars3",
+        image:"https://pixner.net/boleto/demo/assets/images/movie/movie02.jpg",
+      },
+      {
+        name:"Venus3",
+        image:"https://pixner.net/boleto/demo/assets/images/movie/movie03.jpg",
+      }
+    ],
+    cart:[
+
+    ]
+  };
+const reducerFn=(oldState=intialState,action)=>{
+
+    let newState = oldState
+    switch(action.type){
+        case "REMOVE_MOVIE":
+            return{
+                ...oldState,
+                movie:[
+                    ...oldState.movie.filter((cv,idx)=>{
+                        return cv.name !== action.moviename
+                    })
+                ]
+            }   
+    }
+}
+
 const Home = () => {
+  const[newState,dispatch]=useReducer(reducerFn,intialState)
   return (
     <>
         
-        
+        {
+            console.log('mynewState------>',newState)
+        }
         <section className="banner-section">
             <div className="banner-bg bg_img bg-fixed" data-background="assets/images/banner/banner01.jpg" />
             <div className="container">
@@ -292,90 +332,43 @@ const Home = () => {
                     <a className="view-all" href="movie-grid.html">View All</a>
                     </div>
                     <div className="row mb-30-none justify-content-center">
-                    <div className="col-sm-6 col-lg-4">
-                        <div className="movie-grid">
-                        <div className="movie-thumb c-thumb">
-                            <a href="#0">
-                            <img src="assets/images/movie/movie01.jpg" alt="movie" />
-                            </a>
-                        </div>
-                        <div className="movie-content bg-one">
-                            <h5 className="title m-0">
-                            <a href="#0">alone</a>
-                            </h5>
-                            <ul className="movie-rating-percent">
-                            <li>
-                                <div className="thumb">
-                                <img src="assets/images/movie/tomato.png" alt="movie" />
+                    {
+                        newState.movie && newState.movie.map((cv,idx)=>{
+                            return(
+                                <div key={idx} className="col-sm-6 col-lg-4">
+                            <div className="movie-grid">
+                            <div className="movie-thumb c-thumb">
+                                <a href="#0">
+                                <img src={cv.image} alt="movie" />
+                                </a>
+                            </div>
+                            <div className="movie-content bg-one">
+                                <h5 className="title m-0">
+                                <a href="#0">{cv.name}</a>
+                                </h5>
+                                <ul className="movie-rating-percent">
+                                <li>
+                                    <div className="thumb">
+                                    <img src="assets/images/movie/tomato.png" alt="movie" />
+                                    </div>
+                                    <span className="content">88%</span>
+                                </li>
+                                <li>
+                                    <div className="thumb">
+                                    <img src="assets/images/movie/cake.png" alt="movie" />
+                                    </div>
+                                    <span className="content">88%</span>
+                                </li>
+                                </ul>
+                                <button className='btn btn-danger mb-2 btn-sm' onClick={()=>{dispatch({type:'REMOVE_MOVIE',moviename:cv.name})}}>Delete</button>
+                            </div>
+                            </div>
                                 </div>
-                                <span className="content">88%</span>
-                            </li>
-                            <li>
-                                <div className="thumb">
-                                <img src="assets/images/movie/cake.png" alt="movie" />
-                                </div>
-                                <span className="content">88%</span>
-                            </li>
-                            </ul>
-                        </div>
-                        </div>
-                    </div>
-                    <div className="col-sm-6 col-lg-4">
-                        <div className="movie-grid">
-                        <div className="movie-thumb c-thumb">
-                            <a href="#0">
-                            <img src="assets/images/movie/movie02.jpg" alt="movie" />
-                            </a>
-                        </div>
-                        <div className="movie-content bg-one">
-                            <h5 className="title m-0">
-                            <a href="#0">mars</a>
-                            </h5>
-                            <ul className="movie-rating-percent">
-                            <li>
-                                <div className="thumb">
-                                <img src="assets/images/movie/tomato.png" alt="movie" />
-                                </div>
-                                <span className="content">88%</span>
-                            </li>
-                            <li>
-                                <div className="thumb">
-                                <img src="assets/images/movie/cake.png" alt="movie" />
-                                </div>
-                                <span className="content">88%</span>
-                            </li>
-                            </ul>
-                        </div>
-                        </div>
-                    </div>
-                    <div className="col-sm-6 col-lg-4">
-                        <div className="movie-grid">
-                        <div className="movie-thumb c-thumb">
-                            <a href="#0">
-                            <img src="assets/images/movie/movie03.jpg" alt="movie" />
-                            </a>
-                        </div>
-                        <div className="movie-content bg-one">
-                            <h5 className="title m-0">
-                            <a href="#0">venus</a>
-                            </h5>
-                            <ul className="movie-rating-percent">
-                            <li>
-                                <div className="thumb">
-                                <img src="assets/images/movie/tomato.png" alt="movie" />
-                                </div>
-                                <span className="content">88%</span>
-                            </li>
-                            <li>
-                                <div className="thumb">
-                                <img src="assets/images/movie/cake.png" alt="movie" />
-                                </div>
-                                <span className="content">88%</span>
-                            </li>
-                            </ul>
-                        </div>
-                        </div>
-                    </div>
+                            )
+                        })
+                    }
+                        
+                        
                     </div>
                 </div>
                 <div className="article-section padding-bottom">
