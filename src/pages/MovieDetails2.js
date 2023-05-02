@@ -1,8 +1,17 @@
-import React from 'react'
-
-const MovieDetails2 = () => {
-  return (
-    <>
+import React, { Component } from 'react'
+import { withTranslation } from 'react-i18next';
+import '../i18n'
+class MovieDetails2 extends Component {
+    //1. properrty
+    //2. Constructor
+    constructor(){
+        super()
+    }
+    //3. Method
+  render() {
+    const { t } = this.props;
+    return (
+      <>
         <section className="details-banner bg_img" data-background="assets/images/banner/banner03.jpg">
             <div className="container">
             <div className="details-banner-wrapper">
@@ -168,7 +177,7 @@ const MovieDetails2 = () => {
                 </div>
                 <div className="col-lg-9 mb-50">
                 <div className="movie-details">
-                    <h3 className="title">photos</h3>
+                    <h3 className="title">{t('Photos')}</h3>
                     <div className="details-photos owl-carousel">
                     <div className="thumb">
                         <a href="assets/images/movie/movie-details01.jpg" className="img-pop">
@@ -487,8 +496,10 @@ const MovieDetails2 = () => {
             </div>
             </div>
         </section>
-    </>
-  )
+      </>
+    )
+  }
 }
 
-export default MovieDetails2
+
+export default withTranslation()(MovieDetails2) ;
